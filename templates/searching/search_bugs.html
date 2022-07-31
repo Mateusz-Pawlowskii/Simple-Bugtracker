@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block footer %}
+{% if 4 > bugs|length %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        {% if search_by == "topic" %}
+      <a class="nav-link active" href="{{ url_for('search_bugs', search_by = 'topic') }}" id="by_topic">Po temacie</a>
+      {% else %}
+      <a class="nav-link" href="{{ url_for('search_bugs', search_by = 'topic') }}" id="by_topic">Po temacie</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if search_by == "project" %}
+      <a class="nav-link active" href="{{ url_for('search_bugs', search_by = 'project') }}" id="by_project">Po projekcie</a>
+      {% else %}
+      <a class="nav-link" href="{{ url_for('search_bugs', search_by = 'project') }}" id="by_project">Po projekcie</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if search_by == "description" %}
+      <a class="nav-link active" href="{{ url_for('search_bugs', search_by = 'description') }}" id="by_description">Po opisie</a>
+      {% else %}
+      <a class="nav-link" href="{{ url_for('search_bugs', search_by = 'description') }}" id="by_description">Po opisie</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if search_by == "status" %}
+      <a class="nav-link active" href="{{ url_for('search_bugs', search_by = 'status') }}" id="by_status">Po statusie</a>
+      {% else %}
+      <a class="nav-link" href="{{ url_for('search_bugs', search_by = 'status') }}" id="by_status">Po statusie</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if search_by == "tag" %}
+      <a class="nav-link active" href="{{ url_for('search_bugs', search_by = 'tag') }}" id="by_tag">Po tagach</a>
+      {% else %}
+      <a class="nav-link" href="{{ url_for('search_bugs', search_by = 'tag') }}" id="by_tag">Po tagach</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+      {% if search_by == "importance" %}
+    <a class="nav-link active" href="{{ url_for('search_bugs', search_by = 'importance') }}" id="by_importance">Po ważności</a>
+    {% else %}
+    <a class="nav-link" href="{{ url_for('search_bugs', search_by = 'importance') }}" id="by_importance">Po ważności</a>
+    {% endif %}
+  </li>
+  </ul>
+  <br>
+<h2>Wyszukuj błędy po {% if search_by == "topic" %}
+                        temacie
+                        {% elif search_by == "project" %}
+                        projekcie
+                        {% elif search_by == "description" %}
+                        opisie
+                        {% elif search_by == "status" %}
+                        statusie
+                        {% elif search_by == "tag" %}
+                        tagach
+                        {% elif search_by == "importance" %}
+                        ważności
+                        {% endif %}:</h2>
+<form action="" method="POST">
+    {{form.hidden_tag()}}
+     <div class="form-group">
+        {% if search_by == "status" %}
+         <label for="stat">Status</label>
+        <select name="stat" id="stat-status">
+            <option value="unresolved" id="unresolved">Nierozwiązane</option>
+            <option value="resolved" id="resolved">Rozwiązane</option>
+         </select>
+        </div>
+        {% elif search_by == "tag" %}
+        <label for="tags">Podaj tagi (rozdziel używając przecinka(,)):</label>
+            <input class="form-control" id="searched" name="tags" placeholder="tagi">
+        </div>
+        <div class="form-group form-check">
+        <input type="checkbox" value="joined" class="form-check-input" id="joined" name="joined">
+    <label class="form-check-label" for="joined1">Łącznie</label>
+</div>
+        {% elif search_by == "importance" %}
+        <label for="importance">Ważność</label>
+        <select name="importance" id="search_importance">
+          <option value="Propozycja">Propozycja</option>
+          <option value="Błachy">Błachy</option>
+          <option value="Poprawka">Poprawka</option>
+          <option value="Drobny">Drobny</option>
+          <option value="Ważny">Ważny</option>
+          <option value="Krytyczny">Krytyczny</option>
+          <option value="Blokujący">Blokujący</option>
+        </select>
+        </div>
+        {% else %}
+        <label for="searched">{% if search_by == "topic" %}
+                                Temat
+                                {% elif search_by == "project" %}
+                                Projekt
+                                {% elif search_by == "description" %}
+                                Opis
+                                {% endif %}</label>
+         {{ form.searched(class_="form-control") }}
+        </div>
+         {% endif %}
+         <button type="submit" class="btn btn-primary mt-1 mb-1" id="submit">Szukaj</button>
+         <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th width=15% scope="col"><label for="sor_by">Sortuj według:</label></th>
+              <th width=15% scope="col"><label for="order">Kolejność:</label></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <select name="sor_by" id="sor_by">
+                  <option value = "id">Czasu zgłoszenia</option>
+                  <option value = "topic">Tematu</option>
+                  <option value = "importance">Ważności</option>
+                  <option value = "project">Projektu</option>
+                  <option value = "status">Statusu</option>
+                  <option value = "len_att">Ilości załączników</option>
+               </select>
+              </td>
+              <td>
+                <select name="order" id="order">
+                  <option value = "decreasing">Malejąca</option>
+                  <option value = "increasing">Rosnąca</option>
+               </select>
+              </td>
+              <td></td>
+            </tr>
+          </tbody> 
+    </table>
+  </form>
+  {% if searched %}
+  <h2>Szukałeś: {{ searched }}</h2>
+  <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Index</th>
+          <th scope="col">Temat</th>
+          <th scope="col">Ważność</th>
+          <th scope="col">Projekt</th>
+          <th scope="col">Opis</th>
+          <th scope="col">Status</th>
+          <th scope="col">Tagi</th>
+          <th scope="col">Ilość załączników</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for bug in bugs %}
+        <tr>
+          <th scope="row">{{bug.id_}}</th>
+          <td><a href="/detailed/{{bug.id}}" id="bug/{{loop.index}}">{{bug.topic}}</a></td>
+          <td>{{bug.importance}}</td>
+          <td>{% for project in projects %}
+            {% if project.id == bug.project_id %}
+            {{project.name}}
+            {% endif %}
+            {% endfor %}</td>
+          <td>{{bug.description}}</td>
+          <td>{{bug.status}}</td>
+          <td>{{bug.tag_id}}</td>
+          <td>{{ bug.attachment }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

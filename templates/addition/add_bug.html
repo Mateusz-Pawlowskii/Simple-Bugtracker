@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{form.hidden_tag()}}
+    <div class="form-group">
+      <label for="topic">Temat</label>
+      {{ form.topic(class_="form-control") }}
+  </div>
+  <div class="form-group">
+    <label for="description">Opis</label>
+    {{ form.description(class_="form-control") }}
+</div>
+  <div class="form-group">
+    <label for="project">Projekt</label>
+    <select class="form-control" id="project_id" name="project_id">
+        {% for opt in projects %}
+        <option value="{{opt.id}}">{{opt}}</option>
+        {% endfor %}
+      </select>
+   </div>
+     <div class="form-group">
+         <label for="importance">Ważność</label>
+         <select class="form-control" id="importance" name="importance">
+            <option value="propozycja">propozycja</option>
+            <option value="błachy">błachy</option>
+            <option value="poprawka">poprawka</option>
+            <option value="drobny">drobny</option>
+            <option value="ważny">ważny</option>
+            <option value="krytyczny">krytyczny</option>
+            <option value="blokujący">blokujący</option>
+          </select>
+     </div>
+       <div class="form-group">
+        <label for="tag_id">Podaj tagi (rozdziel używając przecinka(,)):</label>
+        {{ form.tag_id(class_="form-control") }}
+    </div>
+       <div class="form-group">
+        <label for="attachment">Dodaj załącznik:</label>
+        <input type="file" class="form-control-file" id="attachment" name="attachment">
+      </div>
+     <button type="submit" class="btn btn-primary" id="submit">Zgłoś</button>
+  </form>
+{% endblock %}

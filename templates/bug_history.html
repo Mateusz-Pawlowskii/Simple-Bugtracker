@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Historia zmian błędu {{bug.id_}} - {{bug.topic}}</h3>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Rodzaj</th>
+        <th scope="col">Czas</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for act in actions %}
+      <tr>
+        <th scope="row">{{act.kind}}</th>
+        <td>{{act.time}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

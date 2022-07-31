@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {% if message == "Please log in to access this page." %}
+  Prosimy o zalogowanie się by uzyskać dostęp do tej strony
+  {% else %}
+  {{ message }}
+  {% endif %}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<h3>
+    Zaloguj się
+  </h3>
+  
+  {% if errors %}
+     {{ errors.username }}
+  {% endif %}
+  <form action="" method="POST">
+    {{form.hidden_tag()}}
+     <div class="form-group">
+         <label for="login">Login</label>
+             {{ form.login(class_="form-control") }}
+  
+     </div>
+     <div class="form-group">
+         <label for="password">Hasło</label>
+             {{ form.password(class_="form-control") }}
+     </div>
+     <button type="submit" class="btn btn-primary mt-5" id="submit">Zaloguj</button>
+  </form>
+{% endblock %}

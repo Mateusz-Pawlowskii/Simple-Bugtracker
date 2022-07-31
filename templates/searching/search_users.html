@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block footer %}
+{% if 4 > users|length %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<h2>Wyszukuj użytkowników po loginie:</h2>
+<form action="" method="POST">
+    {{form.hidden_tag()}}
+     <div class="form-group">
+         <label for="searched">Login</label>
+         {{ form.searched(class_="form-control") }}
+     </div>
+     <button type="submit" class="btn btn-primary mt-1 mb-1" id="submit">Szukaj</button>
+     <table class="table">
+      <thead class="thead-dark">
+        <tr>
+            <th width=15% scope="col"><label for="sor_by">Sortuj według:</label></th>
+            <th width=15% scope="col"><label for="order">Kolejność:</label></th>
+            <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        <td><select name="sor_by">
+          <option value = "id">Czasu rejestracji</option>
+          <option value = "login">Alfabetycznie</option>
+       </select></td>
+       <td><select name="order">
+           <option value = "decreasing">Malejąca</option>
+           <option value = "">Wzrastająca</option>
+        </select></td>
+      </tr>
+      </tbody>
+      </table>
+  </form>
+{% if searched %}
+<h2>Szukałeś: {{ searched }}</h2>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Login</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th scope="row">{{user.id}}</th>
+        <td class="login">{{user.login}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}

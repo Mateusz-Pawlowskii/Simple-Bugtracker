@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+
+<br><p class="text-center"><a href="{{ url_for('search_users') }}" class="btn btn-primary my-2 my-lg-0" id="users">Szukaj użytkowników</a></p>
+<br>
+<br><p class="text-center"><a href="{{ url_for('search_projects', search_by = 'name') }}" class="btn btn-primary my-2 my-lg-0" id="projects">Szukaj projektów</a></p>
+<br>
+<br><p class="text-center"><a href="{{ url_for('search_bugs', search_by = 'topic') }}" class="btn btn-primary my-2 my-lg-0" id="bugs">Szukaj błędów</a></p>
+{% endblock %}

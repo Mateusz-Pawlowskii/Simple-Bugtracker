@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{form.hidden_tag()}}
+    <div class="form-group">
+      <label for="topic">Temat</label>
+      {{ form.topic(class_="form-control") }}
+  </div>
+  <div class="form-group">
+    <label for="description">Opis</label>
+    {{ form.description(class_="form-control") }}
+</div>
+     <div class="form-group">
+         <label for="importance">Ważność</label>
+         <select class="form-control" id="importance" name="importance">
+            <option>propozycja</option>
+            <option>błachy</option>
+            <option>poprawka</option>
+            <option>drobny</option>
+            <option>ważny</option>
+            <option>krytyczny</option>
+            <option>blokujący</option>
+          </select>
+     </div>
+       <div class="form-group">
+        <label for="tag_id">Podaj tagi (rozdziel używając przecinka(,)):</label>
+        {{ form.tag_id(class_="form-control") }}
+    </div>
+     <button type="submit" class="btn btn-primary" id="submit">Zapisz zmiany</button> 
+  </form>
+  <br>
+  <a class="btn btn-primary bt-1" href="/detailed/{{bug.id}}" role="button">Cofnij</a>
+{% endblock %}

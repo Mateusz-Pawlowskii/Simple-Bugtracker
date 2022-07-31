@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block footer %}
+{% if 4 > projects|length %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% if search_by == "name" %}
+<ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link active" href="{{ url_for('search_projects', search_by = 'name') }}" id="by_name">Po nazwie</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('search_projects', search_by = 'description') }}" id="by_description">Po opisie</a>
+    </li>
+  </ul>
+{% elif search_by == "description" %}
+<ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('search_projects', search_by = 'name') }}" id="by_name">Po nazwie</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="{{ url_for('search_projects', search_by = 'description') }}" id="by_description">Po opisie</a>
+    </li>
+  </ul>
+  {% endif %}
+  <br>
+<h2>Wyszukuj projekty po {% if search_by == "name" %}
+                        nazwie
+                        {% else %}
+                        opisie
+                        {% endif %}:</h2>
+<form action="" method="POST">
+    {{form.hidden_tag()}}
+     <div class="form-group">
+         <label for="searched">{% if search_by == "name" %}
+                                Nazwa
+                                {% else %}
+                                Opis
+                                {% endif %}</label>
+         {{ form.searched(class_="form-control") }}
+     </div>
+     <button type="submit" class="btn btn-primary mt-1 mb-1" id="submit">Szukaj</button>
+     <br>
+     <table class="table">
+      <thead class="thead-dark">
+        <tr>
+            <th width=15% scope="col"><label for="sor_by">Sortuj według:</label></th>
+            <th width=15% scope="col"><label for="order">Kolejność:</label></th>
+            <th></th>
+        </tr>
+      </thead>
+      <tbody>
+     <tr>
+      <td>
+     <select name="sor_by" id="sor_by">
+        <option value = "id">Czasu utworzenia</option>
+        <option value = "name">Nazwy</option>
+        <option value = "len_bugs">Ilości błędów</option>
+     </select>
+    </td>
+    <td>
+     <select name="order" id="order">
+        <option value = "decreasing">Malejąca</option>
+        <option value = "increasing">Wzrastająca</option>
+     </select>
+     <td></td>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+  </form>
+  {% if searched %}
+  <h2>Szukałeś: {{ searched }}</h2>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Index</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Opis</th>
+        <th scope="col">Użytkownicy</th>
+        <th scope="col">Błędy</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for pro in projects %}
+        <tr>
+          <th scope="row">{{pro.id_}}</th>
+          <td><a href="/edit/project/{{pro.id}}" id="project/{{loop.index}}">{{pro.name}}</a></td>
+          <td>{{pro.description}}</td>
+          <td>{{pro.user_id}}</td>
+          <td>{{pro.bug_id}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+{% endblock %}

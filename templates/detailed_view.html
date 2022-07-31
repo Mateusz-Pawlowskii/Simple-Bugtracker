@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<h1>{{bug.id_}} {{bug.topic}}</h1>
+<br>
+<form action="", method = "POST">
+<a class="btn btn-primary" href="/edit/bug/{{bug.id}}" role="button" id="edit">Edytuj</a>
+<a class="btn btn-primary" href="/bug/history/{{bug.id}}" role="button">Historia Zmian</a>
+  {% if bug.status == "rozwiązany" %}
+  <input type="hidden" value="nierozwiązany" id="status" name="status">
+  <button type="submit" class="btn btn-primary" id="change_status">Zaznacz jako nierozwiązany</button>
+  {% else %}
+  <input type="hidden" value="rozwiązany" id="status" name="status">
+  <button type="submit" class="btn btn-primary" id="change_status">Zaznacz jako rozwiązany</button>
+  {% endif %}
+</form>
+<br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th width=15% scope="col">Cecha</th>
+      <th scope="col">Wartość</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Opis:</td>
+      <td>{{bug.description}}</td>
+    </tr>
+    <tr>
+      <td>Przypisany do projektu:</td>
+      <td>{{project.name}}</td>
+    </tr>
+    <tr>
+      <td>Ważność:</td>
+      <td>{{bug.importance}}</td>
+    </tr>
+    <tr>
+      <td>Status:</td>
+      <td>{{bug.status}}</td>
+    </tr>
+    <tr>
+      <td>Tagi:</td>
+      <td>{{bug.tag_id}}</td>
+    </tr>
+    <tr>
+      <td>Zgłoszony przez:</td>
+      <td>{{sub.login}}</td>
+    </tr>
+  </tbody>
+</table>
+<form action="/add/attachment/{{bug.id}}" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+      <input type="file" class="form-control-file" id="attachment" name="attachment">
+    </div>
+   <button type="submit" class="btn btn-primary">Dodaj załącznik</button>
+  </form>
+  <br>
+{% if attachments %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th width=40% scope="col">Pobież</th>
+      <th scope="col">Usuń</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for attachment in attachments %}
+    <tr>
+      <td><a class="btn btn-primary" href="/download/{{attachment.id}}" role="button"> {{attachment.filename}}</a></td>
+      <td><a class="btn btn-primary" href="/delete/attachment/{{bug.id}}/{{attachment.id}}" role="button">Usuń</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

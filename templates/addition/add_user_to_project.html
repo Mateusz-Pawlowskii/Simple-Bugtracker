@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+    
+    <div class="form-group">
+      <form action="" method="POST">
+        {{form.hidden_tag()}}
+         <div class="form-group">
+        <label for="user_login">Login użytkownika który ma zostać dołączony do projektu</label>
+          {{ form.user_login(class_="form-control") }}
+      </div>
+    <div class="form-group">
+        <label for="project">Projekt</label>
+        <select class="form-control" id="project_id" name="project_id">
+            {% for opt in projects %}
+            <option value="{{opt.id}}">{{opt}}</option>
+            {% endfor %}
+          </select>
+       </div>
+     <button type="submit" class="btn btn-primary">Przyłącz</button>
+  </form>
+{% endblock %}

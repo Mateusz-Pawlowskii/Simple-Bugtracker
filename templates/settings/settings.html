@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<br>
+<p class="text-center"><a href="{{ url_for('login_change') }}" class="btn btn-primary my-2 my-lg-0">Zmień login</a></p>
+<br>
+<p class="text-center"><a href="{{ url_for('password_change') }}" class="btn btn-primary my-2 my-lg-0">Zmień hasło</a></p>
+<br>
+<p class="text-center"><a href="{{ url_for('email_change') }}" class="btn btn-primary my-2 my-lg-0">Zmień adres email</a></p>
+{% endblock %}

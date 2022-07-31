@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="BugTracker, Bug Tracker, Bug, Tracker, Bugs, Programming, Python">
+    <meta name="description" content="Bezpłatna aplikacja do rejestrowania i zarządzania błędami w oprogramowaniu.">
+    <meta name="author" content="Mateusz Pawłowski">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Bugtracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/font.css">
+    <link rel="icon" href="/static/computer-bug-icon.png">
+    {% block footer %}{% endblock %}
+</head>
+<body class="body">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+        <img src="/static/computer-bug-icon.png" height="40" width="40"/>
+        <li class="nav-item">
+            <a class="nav-link" href="/"> </a>
+          </li>
+        <a class="navbar-brand" href="/">Simple Bugtracker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            {% if nav == "homepage" %}
+            <li class="nav-item active">
+                {% else %}
+                <li class="nav-item">
+                {% endif %}
+              <a class="nav-link" href="{{url_for('homepage')}}" id="home_page">Strona Domowa</a>
+            </li>
+            {% if current_user.is_authenticated %}
+            {% if nav == "search" %}
+            <li class="nav-item active">
+                {% else %}
+                <li class="nav-item">
+                {% endif %}
+              <a class="nav-link" href="{{url_for('advanced_search')}}" id="search">Wyszukaj</a>
+            </li>
+            {% if nav == "add" %}
+            <li class="nav-item active">
+                {% else %}
+                <li class="nav-item">
+                {% endif %}
+                <a class="nav-link" href="{{url_for('add')}}" id="add">Dodaj</a>
+              </li>
+              {% if False %}
+              {% if nav == "stats" %}
+            <li class="nav-item active">
+                {% else %}
+                <li class="nav-item">
+                {% endif %}
+                <a class="nav-link" href="#" id="stats">Statystyki</a>
+              </li>
+              {% endif %}
+              {% if nav == "settings" %}
+            <li class="nav-item active">
+                {% else %}
+                <li class="nav-item">
+                {% endif %}
+                <a class="nav-link" href="{{url_for('settings')}}" id="settings">Ustawienia</a>
+              </li>
+              {% endif %}
+              {% if nav == "about" %}
+              <li class="nav-item active">
+                  {% else %}
+                  <li class="nav-item">
+                  {% endif %}
+                  <a class="nav-link" href="{{url_for('about')}}" id="about">O mnie</a>
+                </li>
+              {% if current_user.is_authenticated %}
+              <form class="form-inline my-2 my-lg-0" action="{{ url_for('logout') }}" method="POST">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Wyloguj</button>
+      </form>
+    {% else %}
+      <a href="{{ url_for('login') }}" class="btn btn-secondary my-2 my-lg-0" id="logging">Zaloguj</a>
+    {% endif %}
+  </ul>
+  {% if current_user.confirmed and current_user.is_authenticated %}
+    <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('search')}}">
+      <input class="form-control mr-sm-2" type="search" placeholder="temat błędu..." name="searched">
+      <button class="btn btn-light my-2 my-sm-0" type="submit">Szukaj</button>
+    </form>
+    {% endif %}
+        </div>
+      </nav>
+    {% block content %}{% endblock %}
+    <footer class="footer">
+      <div class="container text-center">
+      Simple Bugtracker Mateusz Pawłowski 2022
+    </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

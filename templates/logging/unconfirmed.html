@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<p class="text-center">Konto nie zostało potwierdzone, prosimy o sprawdzenie skrzynki mailowej</p>
+<br>
+<br>
+<p class="text-center">Nie otrzymałeś meila?</p>
+<br>
+<br><p class="text-center"><a href="{{ url_for('resend_confirmation') }}" class="btn btn-primary my-2 my-lg-0">Wyślij ponownie</a></p>
+{% endblock %}

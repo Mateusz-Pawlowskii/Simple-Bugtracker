@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<form action="" method="POST">
+  <div class="form-group">
+    <label for="description">Podaj hasło (aktualne, nie ulegnie zmianie):</label>
+    {{ form.password(class_="form-control") }}
+</div>
+    {{form.hidden_tag()}}
+     <div class="form-group">
+         <label for="new_data">Nowy email:</label>
+         {{ form.new_data(class_="form-control") }}
+     </div>
+     <button type="submit" class="btn btn-primary mt-5">Zmień</button>
+  </form>
+{% endblock %}

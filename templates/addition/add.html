@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+{% if projects_exist == 1 %}
+<br><p class="text-center"><a href="{{ url_for('add_user_to_project') }}" class="btn btn-primary my-2 my-lg-0">Dodaj użytkownika do projektu</a></p>
+{% endif %}
+<br>
+<br><p class="text-center"><a href="{{ url_for('add_project') }}" id="add_project" class="btn btn-primary my-2 my-lg-0">Dodaj nowy projekt</a></p>
+<br>
+{% if projects_exist == 1 %}
+<br><p class="text-center"><a href="{{ url_for('add_bug') }}" id="add_bug" class="btn btn-primary my-2 my-lg-0">Zgłoś nowy błąd do projektu</a></p>
+{% endif %}
+{% endblock %}

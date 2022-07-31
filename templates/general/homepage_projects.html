@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block footer %}
+{% if 5 > projects|length %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+<h4>Użytkownik: {{ current_user }}</h4>
+<br>
+<ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('homepage') }}">Błędy</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="{{ url_for('homepage_projects') }}">Projekty</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('homepage_history') }}">Historia Zmian</a>
+    </li>
+  </ul>
+  <br>
+  <form action="" method="POST">
+    {{form.hidden_tag()}}
+     <div class="form-group">
+      <table class="table">
+        <thead class="thead-dark">
+  <tr>
+    <th width=15% scope="col"><label for="sor_by">Sortuj według:</label></th>
+  <th width=15% scope="col"><label for="order">Kolejność:</label></th>
+  <th></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>
+     <select name="sor_by">
+        <option value = "id">Czasu utworzenia</option>
+        <option value = "name">Nazwy</option>
+        <option value = "len_bugs">Ilości błędów</option>
+     </select>
+    </td>
+     <td>
+     <select name="order">
+        <option value = "1">Malejąca</option>
+        <option value = "2">Wzrastająca</option>
+     </select>
+    </td>
+    <td><button type="submit" class="btn btn-primary">Sortuj</button></td>
+    </tr>
+    </tbody>
+    </table>
+     
+     </div>
+  </form>
+<h4>Twoje projekty:</h4>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Index</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Opis</th>
+        <th scope="col">Użytkownicy</th>
+        <th scope="col">Błędy</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pro in projects %}
+      <tr>
+        <th scope="row">{{pro.id_}}</th>
+        <td><a href="/edit/project/{{pro.id}}" id="project/{{pro.id_}}">{{pro.name}}</a></td>
+        <td id="project/description/{{pro.id_}}">{{pro.description}}</td>
+        <td>{{pro.user_id}}</td>
+        <td>{{pro.bug_id}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
