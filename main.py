@@ -20,6 +20,7 @@ def check_confirmed(func):
 # part with the general homepage views starts here
 @app.route("/", methods = ["GET","POST"])
 def homepage():
+    a=1
     if current_user.is_authenticated:
         form = SortForm()
         projects = User.query.get(int(session["user_id"])).project_id
