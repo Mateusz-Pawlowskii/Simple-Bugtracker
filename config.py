@@ -1,23 +1,24 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
+import os
 
 
 # part with flask configuration starts here
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SECRET_KEY'] = "c24cc731487b6356c9f87c1c336feb58cede7f8aaaed75bbef315e346313ef4f"
-app.config["SECURITY_PASSWORD_SALT"] = "cb22cd61603dee9e60e8d3d752f77e4580e7d1932036eda9609896c03308fc92"
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", "")
+app.config["SECURITY_PASSWORD_SALT"] = os.environ.get("SECURITY_PASSWORD_SALT", "")
 db = SQLAlchemy(app)
 
 # mail settings
-app.config["MAIL_SERVER"] = 'smtp.gmail.com'
+app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER", "")
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_TLS"] = False
 app.config["MAIL_USE_SSL"] = True
 
 # gmail authentication
-app.config["MAIL_USERNAME"] = "simple.bugtracker2@gmail.com"
-app.config["MAIL_PASSWORD"] = "jvddqgdghnyhsxgk"
+app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME", "")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD", "")
 
 # mail accounts
 app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
