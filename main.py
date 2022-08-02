@@ -22,7 +22,7 @@ def check_confirmed(func):
 def homepage():
     if current_user.is_authenticated:
         form = SortForm()
-        projects = User.query.get(int(session["user_id"])).project_id
+        projects = User.query.get(current_user.id).project_id
         bugs = projects[1:1]
         # If you don't want to allow big amounts of projects to show(that would make screen messy)
         # you can set this variable in customisation
@@ -59,7 +59,7 @@ def homepage():
 def homepage_specyfic(id):
     form = SortForm()
     active = Project.query.get(id)
-    projects = User.query.get(int(session["user_id"])).project_id
+    projects = User.query.get(current_user.id).project_id
     bugs = active.bug_id
     if len(projects)>16:
         no_display = 1
@@ -86,7 +86,7 @@ def homepage_specyfic(id):
 @check_confirmed
 def homepage_projects():
     form = SortForm()
-    projects = User.query.get(int(session["user_id"])).project_id
+    projects = User.query.get(current_user.id).project_id
     if request.method == "POST":
         if form.validate_on_submit:
             if request.form.get("sor_by") == "id":
@@ -105,7 +105,7 @@ def homepage_projects():
 @login_required
 @check_confirmed
 def homepage_history():
-    projects = User.query.get(int(session["user_id"])).project_id
+    projects = User.query.get(current_user.id).project_id
     bugs = projects[1:1]
     actions = projects[1:1]
     for project in projects:
@@ -126,7 +126,6 @@ def login():
         if user:
             if check_password_hash(user.password, request.form["password"]):
                 login_user(user)
-                session["user_id"] = User.query.filter(User.login == request.form["login"]).first().id
                 return redirect(url_for("homepage"))
             else:
                 flash("Złe hasło - spróbuj ponownie")
@@ -164,8 +163,6 @@ def sign():
                     subject = "Prosze o potwierdzenie adresu email"
                     send_email(user.email, subject, html)
                     login_user(user)
-                    session["user_id"] = User.query.filter(User.login == request.form["login"]).first().id
-                    session.permanent = True
                     flash("Udało się pomyślnie utworzyć nowe konto, sprawdź skrzynkę mailową by potwierdzić rejestrację")
                     return redirect(url_for("unconfirmed"))
                 return redirect(url_for("login"))
@@ -228,7 +225,7 @@ def resend_confirmation():
 @check_confirmed
 def add():
     projects_exist = 0
-    if User.query.get(int(session["user_id"])).project_id:
+    if User.query.get(current_user.id).project_id:
         projects_exist = 1
     return render_template("addition/add.html", nav = "add", projects_exist = projects_exist)
 
@@ -240,11 +237,11 @@ def add_project():
     if request.method == "POST":
         project=Project(name = request.form.get("name"),
         description = request.form.get("description"),
-        submiter_id = int(session["user_id"]))
-        project.isworked.append(User.query.get(int(session["user_id"])))
+        submiter_id = current_user.id)
+        project.isworked.append(User.query.get(current_user.id))
         db.session.add(project)
         db.session.commit()
-        project.id_ = len(User.query.get(int(session["user_id"])).project_id)
+        project.id_ = len(User.query.get(current_user.id).project_id)
         db.session.add(project)
         db.session.commit()
         flash("Pomyślnie dodano nowy projekt")
@@ -256,14 +253,14 @@ def add_project():
 @check_confirmed
 def add_bug():
     form = BugForm()
-    projects = User.query.get(int(session["user_id"])).project_id
+    projects = User.query.get(current_user.id).project_id
     if request.method == "POST":
         project_id = int(request.form.get("project_id"))
         bug = Bug(topic = request.form.get("topic"),
         importance = request.form.get("importance"),
         description = request.form.get("description"),
         project_id = project_id,
-        user_id = int(session["user_id"]))
+        user_id = current_user.id)
         db.session.add(bug)
         db.session.commit()
         bug.id_ = len(Project.query.get(project_id).bug_id)
@@ -314,7 +311,7 @@ def add_bug():
 @check_confirmed
 def add_user_to_project():
     form = UserProjectForm()
-    projects = User.query.get(int(session["user_id"])).project_id
+    projects = User.query.get(current_user.id).project_id
     if request.method == "POST":
         user = User.query.filter(User.login == request.form.get("user_login")).first()
         project = Project.query.get(int(request.form.get("project_id")))
@@ -475,7 +472,7 @@ def delete_attachment(bug_id,atach_id):
 @check_confirmed
 def search():
     form = SearchForm()
-    projects = User.query.get(int(session["user_id"])).project_id
+    projects = User.query.get(current_user.id).project_id
     user_bugs = projects[1:1]
     for project in projects:
             user_bugs += project.bug_id
@@ -520,7 +517,7 @@ def search_users():
 @check_confirmed
 def search_projects(search_by):
     form = SearchForm()
-    user_projects = User.query.get(int(session["user_id"])).project_id
+    user_projects = User.query.get(current_user.id).project_id
     bugs = user_projects[1:1]
     for project in user_projects:
             bugs += project.bug_id
@@ -557,7 +554,7 @@ def search_projects(search_by):
 def search_bugs(search_by):
     form = SearchForm()
     bugs = Bug.query
-    projects = User.query.get(int(session["user_id"])).project_id
+    projects = User.query.get(current_user.id).project_id
     user_bugs = projects[1:1]
     for project in projects:
             user_bugs += project.bug_id
@@ -640,7 +637,7 @@ def settings():
 @app.route("/settings/login/change/", methods = ["GET","POST"])
 @login_required
 def login_change():
-    user = User.query.get(int(session["user_id"]))
+    user = User.query.get(current_user.id)
     form = ChangeForm()
     if request.method == "POST":
         if form.validate_on_submit:
@@ -660,7 +657,7 @@ def login_change():
 @app.route("/settings/password/change/", methods = ["GET","POST"])
 @login_required
 def password_change():
-    user = User.query.get(int(session["user_id"]))
+    user = User.query.get(current_user.id)
     form = ChangeForm()
     if request.method == "POST":
         if form.validate_on_submit:
@@ -679,7 +676,7 @@ def password_change():
 
 @app.route("/settings/email/change/", methods = ["GET","POST"])
 def email_change():
-    user = User.query.get(int(session["user_id"]))
+    user = User.query.get(current_user.id)
     form = ChangeForm()
     if request.method == "POST":
         if form.validate_on_submit:
