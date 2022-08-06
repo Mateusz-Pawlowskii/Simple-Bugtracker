@@ -15,8 +15,7 @@
   </button>
 </div>
 {% endfor %}
-<h4>Użytkownik: {{ current_user }}</h4>
-<br>
+<p id="greeting" class="table-secondary">Użytkownik: {{ current_user }}</p>
 <ul class="nav nav-pills">
     <li class="nav-item">
       <a class="nav-link" href="{{ url_for('homepage') }}">Błędy</a>
@@ -33,7 +32,7 @@
     {{form.hidden_tag()}}
      <div class="form-group">
       <table class="table">
-        <thead class="thead-dark">
+        <thead class="bg-secondary">
   <tr>
     <th width=15% scope="col"><label for="sor_by">Sortuj według:</label></th>
   <th width=15% scope="col"><label for="order">Kolejność:</label></th>
@@ -41,7 +40,7 @@
   </tr>
 </thead>
 <tbody>
-  <tr>
+  <tr class="table-secondary">
     <td>
      <select name="sor_by">
         <option value = "id">Czasu utworzenia</option>
@@ -62,7 +61,7 @@
      
      </div>
   </form>
-<h4>Twoje projekty:</h4>
+<p>Twoje projekty:</p>
 <table class="table">
     <thead class="thead-dark">
       <tr>

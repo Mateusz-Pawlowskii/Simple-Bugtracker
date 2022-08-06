@@ -6,7 +6,7 @@ the bugs. It allows to search for bugs and projects by different parameters and 
 
 2. User guide
 You can fork this repository and upload it to a hosting server.
-For a preview you can visit this Heroku link: https://simple-bugtracker-mp.herokuapp.com but don't use it for anything serious as all data will be lost after 30 minutes due to the way Heroku works. It's just for a preview.
+For a preview you can visit this Heroku link: https://simple-bugtracker-mp.herokuapp.com
 You can also use wheel to make a deployed version of this app, check "https://flask.palletsprojects.com/en/2.1.x/tutorial/deploy/" for more info.
 Before deployment remember to set enviormental variables such as SECRET_KEY, SECURITY_PASSWORD_SALT, MAIL_SERVER, MAIL_USERNAME and MAIL_PASSWORD.
 You can set a few additional options in customistation file such as disabling email veryfication.

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<h4>Użytkownik: {{ current_user }}</h4>
+<p id="greeting" class="table-secondary">Użytkownik: {{ current_user }}</p>
 <br>
 <ul class="nav nav-pills">
     <li class="nav-item">
@@ -21,7 +21,8 @@
     </li>
   </ul>
   <br>
-  <h4>Zmiany:</h4>
+  <hr style="width:100%", size="3", color=black>
+  <p>Zmiany:</p>
   <table class="table">
     <thead class="thead-dark">
       <tr>
