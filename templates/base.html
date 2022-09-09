@@ -65,6 +65,13 @@
                 <a class="nav-link" href="{{url_for('settings')}}" id="settings">Ustawienia</a>
               </li>
               {% endif %}
+              {% if nav == "help" %}
+              <li class="nav-item active">
+              {% else %}
+              <li class="nav-item">
+              {% endif %}
+              <a class="nav-link" href="{{url_for('help')}}" id="help">O programie</a>
+            </li>
               {% if nav == "about" %}
               <li class="nav-item active">
                   {% else %}

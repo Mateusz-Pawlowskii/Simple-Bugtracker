@@ -181,6 +181,11 @@ def welcome():
 def about():
         return render_template("about.html", nav = "about")
 
+# view that gives general information about application
+@app.route("/help/")
+def help():
+        return render_template("help.html", nav = "help")
+
 # part with email veryfication starts here
 @app.route("/confirm/<token>")
 @login_required

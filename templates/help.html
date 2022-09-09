@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block footer %}
+<link rel="stylesheet" type="text/css" href="/static/footer.css">
+{% endblock %}
+
+{% block content %}
+<h1><p class="text-center"> O programie </p></h1>
+<br>
+<br>
+<h3><p class="text-center"> Simple Bugtracker to aplikacja służąca do zarządzania procesem identyfikacji oraz
+    dokumentowania błędów w tworzonym oprogramowaniu. Aplikacja została stworzona jako narzędzie dla testerów i programistów.
+    Aplikacja pozwala na jednoczesną pracę wielu osób na wielu projektach. Umożliwia rejestracje i kategoryzacje wykrytych
+    błędów i usterek oraz ewidencje i zarządzanie ich usuwanie aż do momętu gdy wszystkie zostaną wyeliminowane.
+</p></h3>
+<br>
+<h3><p class="text-center"> Do aplikacji mają dostęp wyłącznie zalogowani użytkownicy. Twórca projektu ma możliwość przyłączenia innych
+    użytkowników do projektu tak że ci mogą zgłaszać błędy i czytać te które zostały zgłoszone. Login jest dowolny ale musi być unikatowy.
+    Hasło może być dowolne. Różne ustawienia w postaci wyłączenia walidacji mailowej lub uruchomienia restrykcji rozszerzeń plików
+    zamieszczanych jako załączniki do błędów mogą zostać zmienione poprzez modyfikacje pliku config.py.
+</p></h3>
+<br>
+<h3><a href="https://github.com/Mateusz-Pawlowskii/Simple-Bugtracker"><p class="text-center">Link do repozytorium z aplikacją na githubie</p></a>
+{% endblock %}
