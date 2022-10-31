@@ -6,16 +6,16 @@
 
 {% block content %}
 <br>
-<h2><p class="text-center">Witamy na stronie Simple Bugtracker. Jest to zupełnie bezpłatna aplikacja do rejestrowania i zarządzania
-procesem eliminacji błędów w oprogramowaniu</p></h2>
+<h3><p class="text-center">Witamy na stronie Simple Bugtracker. Jest to zupełnie bezpłatna aplikacja do rejestrowania i zarządzania
+procesem eliminacji błędów w oprogramowaniu</p></h3>
 <p class="text-center"><a href="{{ url_for('help') }}" class="btn btn-primary my-2 my-lg-0">Więcej informacji</a></p>
 <br>
-<h1><p class="text-center">Nie jesteś zalogowany, czy chcesz się zalogować?</p></h1>
+<h3><p class="text-center">Nie jesteś zalogowany, czy chcesz się zalogować?</p></h3>
       <br><p class="text-center"><a href="{{ url_for('login') }}" class="btn btn-primary my-2 my-lg-0">Zaloguj się</a></p>
       <br>
-      <h1>
+      <h3>
         <p class="text-center">Jeśli nie posiadasz konta, możesz je założyć:</p>
-      </h1>
+      </h3>
       <br>
       <br><p class="text-center"><a href="{{ url_for('sign') }}" class="btn btn-primary my-2 my-lg-0" id="create_account">Utwórz konto</a></p>  
 {% endblock %}
