@@ -1,1 +1,1 @@
-from config import app
+from main import app
