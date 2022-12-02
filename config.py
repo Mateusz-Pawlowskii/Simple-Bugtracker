@@ -27,7 +27,7 @@ app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
 
 # set mail_ver to False if you don't want the users to confirm their rejestrations with email.
 # set it to False when you use testing module
-mail_ver = True
+mail_ver = False
 # In order to improve screen redability when there are a lot of projects assigned to users they are hidden from mainpage bug view
 # set projects_hide to False if you don't want projects to be hidden
 projects_hide = True
