@@ -147,11 +147,6 @@ def sign():
     form = SignForm()
     if request.method == "POST":
         if form.validate_on_submit():
-            test_object = User(login = "Test",
-                        password = generate_password_hash("JBfP64Zbk3mKBYAt"),
-                        email = "galedr@o2.pl")
-            db.session.add(test_object)
-            db.session.commit()
             try:
                 user=User(login = request.form.get("login"),
                         password = generate_password_hash(request.form.get("password")),
