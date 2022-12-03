@@ -1,4 +1,4 @@
-from flask_mongoengine import MongoEngine
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 import os
 
@@ -8,8 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", "")
 app.config["SECURITY_PASSWORD_SALT"] = os.environ.get("SECURITY_PASSWORD_SALT", "")
-db = MongoEngine()
-db.init_app(app)
+db = SQLAlchemy(app)
 
 # mail settings
 app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER", "")
